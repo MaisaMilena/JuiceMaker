@@ -21,3 +21,8 @@ foldr c n (x , xs) = c x (foldr c n xs)
 
 length : ∀ {A : Set} → List A → Nat
 length = foldr (λ a n → suc n) zero
+
+-- TODO --
+-- map
+-- filter
+-- reduce
