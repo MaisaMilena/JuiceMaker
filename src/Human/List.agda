@@ -26,3 +26,13 @@ length = foldr (λ a n → suc n) zero
 -- map
 -- filter
 -- reduce
+
+-- Receives a function that transforms each element of A, a function A and a new list, B.
+map : ∀ {A : Set} {B : Set} → (f : A → B) → List A → List B
+map f end      = end
+map f (x , xs) = (f x) , (map f xs) -- f transforms element x, return map to do a new transformation
+
+-- Sum all numbers in a list
+sum-el-list : List Nat → Nat
+sum-el-list end     = zero
+sum-el-list (x , l) = x + (sum-el-list l)

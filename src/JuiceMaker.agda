@@ -13,10 +13,6 @@ data Ingredient : Set where
   beet      : Ingredient
   cabbage   : Ingredient
 
-data Quantity : Set where
-  100ml : Nat → Quantity
-  50ml  : Nat → Quantity
-
   -- TODO: implement or import
   -- Pair : ∀ (A B : Set) → Set
   -- Pair A B = A → B →
@@ -40,17 +36,6 @@ data Pair (A B : Set) : Set where
 -- reduce : List Nat → (Nat → Nat → Nat) → Nat
 -- reduce end r        = zero
 -- reduce (x , l)  r = reduce l r {!   !}
-
-
--- Sum all numbers in a list. Used to sum the ml in a juice
-sum-el-list : List Nat → Nat
-sum-el-list end     = zero
-sum-el-list (x , l) = x + (sum-el-list l)
-
-
-map : ∀ {A : Set} {B : Set} → (f : A → B) → List A → List B
-map f xs = ?
-
 
 ------ Item -------
 Item : Set
