@@ -7,6 +7,8 @@ data List {a} (A : Set a) : Set a where
   end : List A
   _,_ : (x : A) (xs : List A) → List A
 
+data Empty : Set where
+
 {-# BUILTIN LIST List #-}
 
 {-# COMPILE JS  List = function(x,v) { if (x.length < 1) { return v["[]"](); } else { return v["_∷_"](x[0], x.slice(1)); } } #-}
