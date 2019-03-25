@@ -23,7 +23,6 @@ length : ∀ {A : Set} → List A → Nat
 length = foldr (λ a n → suc n) zero
 
 -- TODO --
--- map
 -- filter
 -- reduce
 
@@ -33,6 +32,10 @@ map f end      = end
 map f (x , xs) = (f x) , (map f xs) -- f transforms element x, return map to do a new transformation
 
 -- Sum all numbers in a list
-sum-el-list : List Nat → Nat
-sum-el-list end     = zero
-sum-el-list (x , l) = x + (sum-el-list l)
+sum-num-list : List Nat → Nat
+sum-num-list end     = zero
+sum-num-list (x , l) = x + (sum-num-list l)
+
+remove-last : ∀ {A : Set} → List A → List A
+remove-last end     = end
+remove-last (x , l) = l
