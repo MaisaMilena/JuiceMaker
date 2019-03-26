@@ -30,9 +30,9 @@ map f end      = end
 map f (x , xs) = (f x) , (map f xs) -- f transforms element x, return map to do a new transformation
 
 -- Sum all numbers in a list
-sum-num-list : List Nat → Nat
-sum-num-list end     = zero
-sum-num-list (x , l) = x + (sum-num-list l)
+sum : List Nat → Nat
+sum end     = zero
+sum (x , l) = x + (sum l)
 
 remove-last : ∀ {A : Set} → List A → List A
 remove-last end     = end
