@@ -28,16 +28,6 @@ data Ingredient : Set where
 data Pair (A B : Set) : Set where
   pair : A -> B -> Pair A B
 
--- TODO: perguntar o que é esse "record". Vi que assim não da pra usar da mesma maneira
--- record Pair (A B : Set) : Set where
---  field
---    first  : A
---    second : B
---    pair : A -> B -> Pair A B
---
--- getFirst : ∀ {A B} → Pair A B → A
--- getFirst = Pair.first
-
 --Create a subset (or sigma).Receives a Set and a proof/filter to restricts what items can be part of a subset
 data Subset (A : Set) (IsOk : A → Set) : Set where
   subset : (a : A) (b : IsOk a) → Subset A IsOk
@@ -101,8 +91,7 @@ data ListHasMl : (n : Nat) (list : List Item) → Set where
 
 {- Get the quantity of ml in a list by returning the proof that n is the quantity of ml in a list.
    Obs: the second argument in Subset is something applied to n.
-   λ is used to represents that something (ListhasMl) is applied to n.
-   TODO: ask Victor why I'm returning this subset of 1 item -}
+   λ is used to represents that something (ListhasMl) is applied to n. -}
 get-ml-list : (list : List Item) -> Subset Nat (λ n → ListHasMl n list)
 get-ml-list end = subset zero empty-list-has-0ml
 get-ml-list (it , rest) with get-ml-item it | get-ml-list rest -- "with" acts similar to case, but opening values inside this case
@@ -114,7 +103,7 @@ get-ml-list (it , rest)
     in subset sum-ml append-list-has-sum-ml
 
 
-{- IsJuice is a filter indexed in List Item (receives a list of Item),
+  {- IsJuice is a filter indexed in List Item (receives a list of Item),
   restricts what can become a juice (a proof that it have 300ml),
   and returns an element of IsJuice, that is, a proof that it was approved to become a juice -}
 data IsJuice : List Item → Set where
@@ -158,29 +147,18 @@ get-ml-list-aux : (l : List Item) → Subset Nat (λ n → ListHasMl n l) → Na
 get-ml-list-aux l (subset a b) = a
 
 
--- como eu acho que deveria ser
 -- goal: Maybe (Subset (List (Subset (Pair Nat Ingredient) IsItem)) IsJuice)
 make : List Item -> Maybe Juice
 make end     = nothing
 make (x , l) with make l
 ... | just m  =
       let it-ml = (get-ml-item-aux x (get-ml-item x)) -- quantity of ml in x
-          li-ml = (get-ml-list-aux l (get-ml-list l))
-          list-has-ml-proof = append-item-adds-ml it-ml x li-ml l
-      in ? -- just (subset l (juice l list-has-ml-proof))
+          li-ml = (get-ml-list-aux l (get-ml-list l)) --
+          -- is-juice = subset l (juice l (append-item-aadds-ml it-ml x li-ml l (item-has-ml it-ml x) ? ))
+          -- usar o get-ml-list pra provar que o suco tem 300 ml
+          -- is-juice = subset l (juice l (get-ml-list l))
+      in {!   !} -- just (subset l) (juice l is-juice))
 ... | nothing = nothing
-
-{-
-when checking that the expression list-has-ml-proof has type
-ListHasMl 300 l
-
-
--}
-
--- when checking that the pattern just has type
--- Maybe (Subset (List (Subset (Pair Nat Ingredient) IsItem)) IsJuice)
-
--- it-ml it li-ml li → ItemHasMl it-ml it → ListHasMl li-ml li
 
 
 -- pra satisfazer o chefe
